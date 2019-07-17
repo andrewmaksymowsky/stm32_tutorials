@@ -5,22 +5,23 @@
 
 // Global memory locations
 .global vtable
-.global reset_handler
+.global Reset_Handler
 
 /* The actual vector table
  * Here is where interrupt triggers are mapped to memory
  * locations where their ISRs reside */
 .type vtable, %object
+vtable:
     .word _estack
-    .word reset_handler
+    .word Reset_Handler
 .size vtable, .-vtable
 
 
 /*
  * The Reset handler. Called on reset. ie. what runs on bootup
  */
-.type reset_handler, %function
-reset_handler:
+.type Reset_Handler, %function
+Reset_Handler:
     // Set the stack pointer to the end of the stack
     // The '_estack value is defined in our linker script
     LDR r0, =_estack
@@ -38,4 +39,4 @@ reset_handler:
         // Loop forever
         B   main_loop
 
-.size reset_handler, .-reset_handler
+.size Reset_Handler, .-Reset_Handler
